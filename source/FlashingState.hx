@@ -25,11 +25,15 @@ class FlashingState extends MusicBeatState
 		bg.screenCenter(X);
 		FlxTween.tween(bg, {alpha: 1}, 1, {ease: FlxEase.quadOut});
 		add(bg);
+		
+		#if android
+		addVirtualPad(NONE, A);
+		#end
 	}
 
 	override function update(elapsed:Float)
 	{
-		if (controls.ACCEPT && !selected)
+		if (controls.ACCEPT && !selected #if android || _virtualpad.buttonA.justPressed #end)
 		{
 			selected = true;
 			FlxG.sound.play(Paths.sound('confirmMenu'));
